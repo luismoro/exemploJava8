@@ -1,12 +1,15 @@
 package com.example.controller;
 
 import com.example.model.Aluno;
+import com.example.service.AlunoService;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,29 +18,21 @@ import java.util.List;
 @RestController
 public class AlunoController {
 
+    @Autowired
+    AlunoService alunosService;
+
     @RequestMapping(value = {"/alunos"}, method = RequestMethod.GET)
-    public List<Aluno> getAllAlunos() {
-        return new ArrayList<>();
+    public List<Aluno> getAluno() {
+        return alunosService.getAlunos();
     }
-//
-//    @RequestMapping(value = {"/alunos/{id}"}, method = RequestMethod.GET)
-//    public Aluno getAlunos(@PathVariable("id") String id) {
-//        return new Aluno("nome","sobrenome", 1);
-//    }
-//
-//    @RequestMapping(value = {"/alunos"}, method = RequestMethod.POST)
-//    public Aluno createAlunos(@RequestBody Alunos aluno) {
-//        return new Aluno("nome","sobrenome", 1);
-//    }
-//
-//    @RequestMapping(value = {"/alunos/{id}"}, method = RequestMethod.PATCH)
-//    public List<Aluno> updateAlunosPacth(@PathVariable("id") String id, @RequestBody List<Aluno> aluno) {
-//        return new ArrayList<>();
-//    }
-//
-//    @RequestMapping(value = {"/alunos/{id}"}, method = RequestMethod.PUT)
-//    public Aluno updateAlunosPut(@PathVariable("id") String id, @RequestBody List<Aluno> aluno) {
-//        return new Aluno("nome","sobrenome", 1);
-//    }
+
+    @RequestMapping(value = {"/alunosPorNome"}, method = RequestMethod.GET)
+    public Aluno getAlunoPorNome(@RequestParam(value = "nome") String nome, @RequestParam(value = "sobrenome") String sobrenome) {
+        return alunosService.getAluno(nome, sobrenome);
+    }
+    @RequestMapping(value = {"/alunos/{rg}"}, method = RequestMethod.GET)
+    public Aluno getAluno(@PathVariable("rg") String rg) {
+        return alunosService.getAluno(rg);
+    }
 
 }
