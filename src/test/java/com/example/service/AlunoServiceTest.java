@@ -45,4 +45,14 @@ public class AlunoServiceTest {
         assertEquals(new Gson().toJson(alunoList.get(0)), new Gson().toJson(alunoService.getAluno(alunoList.get(0).getNome(), alunoList.get(0).getSobrenome())));
     }
 
+    @Test
+    public void getAlunoJava8Test() throws Exception {
+        assertEquals(new Gson().toJson(alunoList.get(0)), new Gson().toJson(alunoService.getAlunoJava8(alunoList.get(0).getRg())));
+    }
+
+    @Test
+    public void getAlunoPorNomeJava8Test() throws Exception {
+        assertEquals(new Gson().toJson(alunoList.get(0)), new Gson().toJson(alunoService.getAlunoJava8(alunoList.get(0).getNome(), alunoList.get(0).getSobrenome())));
+    }
+
 }

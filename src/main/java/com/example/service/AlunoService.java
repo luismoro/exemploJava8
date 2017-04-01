@@ -41,4 +41,19 @@ public class AlunoService {
         return null;
     }
 
+    public Aluno getAlunoJava8(String rg){
+        List<Aluno> alunos = AlunosData.getAlunos();
+
+       return alunos.stream().filter(aluno -> rg.equals(aluno.getRg())).findFirst().orElse(null);
+    }
+
+    public Aluno getAlunoJava8(String nome, String sobrenome){
+        List<Aluno> alunos = AlunosData.getAlunos();
+
+        return alunos.stream().filter(
+                aluno -> nome.equals(aluno.getNome())).filter(
+                aluno -> sobrenome.equals(aluno.getSobrenome())
+        ).findFirst().orElse(null);
+    }
+
 }

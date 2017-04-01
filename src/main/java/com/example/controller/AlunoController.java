@@ -35,4 +35,13 @@ public class AlunoController {
         return alunosService.getAluno(rg);
     }
 
+    @RequestMapping(value = {"/alunosPorNomeJava8"}, method = RequestMethod.GET)
+    public Aluno getAlunoPorNomeJava8(@RequestParam(value = "nome") String nome, @RequestParam(value = "sobrenome") String sobrenome) {
+        return alunosService.getAlunoJava8(nome, sobrenome);
+    }
+    @RequestMapping(value = {"/alunosJava8/{rg}"}, method = RequestMethod.GET)
+    public Aluno getAlunoJava8(@PathVariable("rg") String rg) {
+        return alunosService.getAlunoJava8(rg);
+    }
+
 }
