@@ -1,8 +1,9 @@
 package com.example.model.bd;
 
-import com.google.common.collect.ImmutableList;
-
 import com.example.model.Aluno;
+import com.example.model.Disciplina;
+import com.example.model.Escola;
+import com.google.common.collect.ImmutableList;
 
 import java.util.ArrayList;
 import java.util.List;

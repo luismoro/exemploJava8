@@ -85,6 +85,15 @@ public class AlunoService {
 
     }
 
+    public List<Aluno> ordenaAlunoPorIdadeListJava8(){
+        List<Aluno> alunos = AlunosData.getAlunos();
+        alunos.sort((aluno1, aluno2) -> Integer.compare(aluno1.getIdade(), aluno2.getIdade()));
+
+        alunos.sort(Comparator.comparingInt(Aluno::getIdade));
+
+        return alunos;
+    }
+
     class ComparadorPorIdade implements Comparator<Aluno> {
         @Override
         public int compare(Aluno a1, Aluno a2) {
