@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.model.Aluno;
+import com.example.model.bd.AlunosData;
 import com.example.service.AlunoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,14 @@ public class AlunoController {
     @RequestMapping(value = {"/alunosJava8/{rg}"}, method = RequestMethod.GET)
     public Aluno getAlunoJava8(@PathVariable("rg") String rg) {
         return alunosService.getAlunoJava8(rg);
+    }
+    @RequestMapping(value = {"/alunosOrdenadosPorIdade"}, method = RequestMethod.GET)
+    public List<Aluno> getAlunoOrdenadosPorIdade() {
+        return alunosService.getAlunoOrdenadoPorIdade(AlunosData.getAlunosAndre());
+    }
+    @RequestMapping(value = {"/alunosOrdenadosPorIdadeJava8"}, method = RequestMethod.GET)
+    public List<Aluno> getAlunoOrdenadosPorIdadeJava8() {
+        return alunosService.getAlunoOrdenadoPorIdadeJava8(AlunosData.getAlunosAndre());
     }
 
 }

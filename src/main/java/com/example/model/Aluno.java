@@ -33,4 +33,14 @@ public class Aluno {
     public String getRg() {
         return rg;
     }
+
+    @Override
+    public String toString() {
+        return "Aluno{" +
+                "nome='" + nome + '\'' +
+                ", sobrenome='" + sobrenome + '\'' +
+                ", idade=" + idade +
+                ", rg='" + rg + '\'' +
+                '}';
+    }
 }
