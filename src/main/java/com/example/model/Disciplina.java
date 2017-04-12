@@ -11,7 +11,7 @@ public class Disciplina {
     private String nome;
     private String codigo;
     private Professor professor;
-    private List<Aluno> alunos = new ArrayList<>();
+    private List<Aluno> alunos;
 
 
     public Disciplina(String nome, String codigo, Professor professor, List<Aluno> alunos) {

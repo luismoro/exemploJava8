@@ -1,11 +1,9 @@
 package com.example.service;
 
-import com.example.model.Curso;
 import com.example.model.Escola;
 import com.example.model.bd.EscolaData;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -17,7 +15,7 @@ import java.util.List;
 public class EscolaService {
 
 
-    public List<Escola> getEscolaPorQuantidadeAlunos(Integer qtdAluno) {
+    public List<Escola> ordenaEscolaPorQuantidadeCursos() {
 
         List<Escola> listaEscolas = EscolaData.getEscolas();
 
@@ -42,7 +40,7 @@ public class EscolaService {
                 return -1;
             }
 
-            if(e1.getCursos().size() > e1.getCursos().size()){
+            if(e1.getCursos().size() > e2.getCursos().size()){
                 return  1;
             }
             return 0;

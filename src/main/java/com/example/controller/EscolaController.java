@@ -22,9 +22,9 @@ public class EscolaController {
     @Autowired
     EscolaService escolaService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public List<Escola> getAlunoPorNomeJava8(@RequestParam(value = "qtdAlunos") Integer qtdAlunos) {
-        return escolaService.getEscolaPorQuantidadeAlunos(qtdAlunos);
+    @RequestMapping(value = "/ordenar_por_quantidade_cursos", method = RequestMethod.GET)
+    public List<Escola> getAlunoPorNomeJava8() {
+        return escolaService.ordenaEscolaPorQuantidadeCursos();
     }
 
 

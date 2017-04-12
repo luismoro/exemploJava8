@@ -17,7 +17,6 @@ public class EscolaData {
     public static List<Escola> getEscolas(){
         return ImmutableList.<Escola>builder()
                 .add(new Escola("Impacta", CursoData.getCursos(3)))
-                .add(new Escola("Fiap", CursoData.getCursos(10)))
                 .add(new Escola("Uninove", CursoData.getCursos(120)))
                 .add(new Escola("Senac", CursoData.getCursos(45)))
                 .add(getEscola())

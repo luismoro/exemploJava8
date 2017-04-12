@@ -10,7 +10,7 @@ import java.util.List;
 public class Escola {
 
     private String nome;
-    private List<Curso> cursos = new ArrayList<>();
+    private List<Curso> cursos;
 
 
     public Escola(String nome, List<Curso> cursos) {
