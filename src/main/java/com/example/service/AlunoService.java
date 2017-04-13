@@ -5,7 +5,6 @@ import com.example.model.bd.AlunosData;
 
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -65,24 +64,27 @@ public class AlunoService {
                 .orElse(null);
     }
 
-    public List<Aluno> getAlunoOrdenadoPorIdade(final List<Aluno> alunos){
-        List<Aluno> alunoList = new ArrayList<Aluno>(alunos);
+    public List<Aluno> getAlunoOrdenadoPorIdade(List<Aluno> alunos){
+        Collections.sort(alunos, new ComparadorPorIdade());
 
-        Collections.sort(alunoList, new ComparadorPorIdade());
-
-        alunos.forEach(new PrintaALuno());
+        for (Aluno aluno : alunos) {
+            System.out.println(aluno);
+        }
 
         return alunos;
     }
 
-    public List<Aluno> getAlunoOrdenadoPorIdadeJava8(final List<Aluno> alunos){
+    public List<Aluno> getAlunoOrdenadoPorIdadeDefaultMetod(List<Aluno> alunos){
+        alunos.sort(new ComparadorPorIdade());
+        alunos.forEach(new PrintaAluno());
+        return alunos;
+    }
 
+    public List<Aluno> getAlunoOrdenadoPorIdadeJava8(final List<Aluno> alunos){
         return alunos.stream()
             .sorted((a1,a2) -> a1.getIdade()-a2.getIdade())
-            .peek(Aluno::toString)
+            .peek(System.out::println)
             .collect(Collectors.toList());
-
-
     }
 
     class ComparadorPorIdade implements Comparator<Aluno> {
@@ -91,7 +93,7 @@ public class AlunoService {
             return a1.getIdade()-a2.getIdade();
         }
     }
-    class PrintaALuno implements Consumer<Aluno> {
+    class PrintaAluno implements Consumer<Aluno> {
         @Override
         public void accept(Aluno aluno) {
             System.out.println(aluno.getIdade() + " - " + aluno.getNome() + " " + aluno.getSobrenome());

@@ -55,4 +55,6 @@ public class AlunoServiceTest {
         assertEquals(new Gson().toJson(alunoList.get(0)), new Gson().toJson(alunoService.getAlunoJava8(alunoList.get(0).getNome(), alunoList.get(0).getSobrenome())));
     }
 
+
+
 }

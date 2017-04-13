@@ -46,7 +46,11 @@ public class AlunoController {
     }
     @RequestMapping(value = {"/alunosOrdenadosPorIdade"}, method = RequestMethod.GET)
     public List<Aluno> getAlunoOrdenadosPorIdade() {
-        return alunosService.getAlunoOrdenadoPorIdade(AlunosData.getAlunosAndre());
+        return alunosService.getAlunoOrdenadoPorIdade(AlunosData.getAlunos());
+    }
+    @RequestMapping(value = {"/alunosOrdenadosPorIdadeDefatultMetod"}, method = RequestMethod.GET)
+    public List<Aluno> getAlunoOrdenadosPorIdadeDefaultMetod() {
+        return alunosService.getAlunoOrdenadoPorIdadeDefaultMetod(AlunosData.getAlunos());
     }
     @RequestMapping(value = {"/alunosOrdenadosPorIdadeJava8"}, method = RequestMethod.GET)
     public List<Aluno> getAlunoOrdenadosPorIdadeJava8() {
