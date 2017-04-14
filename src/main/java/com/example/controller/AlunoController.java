@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import com.google.gson.Gson;
+
 import com.example.model.Aluno;
 import com.example.model.bd.AlunosData;
 import com.example.service.AlunoService;
@@ -11,7 +13,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.OptionalDouble;
 
 /**
  * Created by luismoro on 15/03/17.
@@ -56,5 +64,41 @@ public class AlunoController {
     public List<Aluno> getAlunoOrdenadosPorIdadeJava8() {
         return alunosService.getAlunoOrdenadoPorIdadeJava8(AlunosData.getAlunosAndre());
     }
+    @RequestMapping(value = {"/printaAlunos"}, method = RequestMethod.GET)
+    public void printaAlunos() {
+        alunosService.printaAlunos(AlunosData.getAlunos());
+    }
+    @RequestMapping(value = {"/printaAlunosComLambda"}, method = RequestMethod.GET)
+    public void printaAlunosComLambda() {
+        alunosService.printaAlunosComLambda(AlunosData.getAlunos());
+    }
+    @RequestMapping(value = {"/getAlunosIdadeMaior5"}, method = RequestMethod.GET)
+    public List<Aluno> getAlunosIdadeMaior5() {
+        return alunosService.getAlunosIdadeMaior5(AlunosData.getAlunos());
+    }
+    @RequestMapping(value = {"/getMediaIdadeAlunos"}, method = RequestMethod.GET)
+    public OptionalDouble getMediaIdadeAlunos() {
+        return alunosService.getMediaIdadeAlunos(AlunosData.getAlunos());
+    }
+    @RequestMapping(value = {"/getDatas"}, method = RequestMethod.GET)
+    public String getDatas() {
 
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+
+
+        String hoje = alunosService.getHoje().format(DateTimeFormatter.ofPattern("dd/MM/yy"));
+        int diferencaAno = alunosService.getDiferencaAno(LocalDate.now().plusYears(4));
+        Period diferencaAnoMesDia = alunosService.getDiferencaAnoMesDia(LocalDate.now().plusYears(4));
+        String soma4Anos = alunosService.getSoma4Anos(LocalDate.now());
+
+
+        Map map = new HashMap();
+        map.put("hoje", hoje);
+        map.put("diferencaAno", diferencaAno);
+        map.put("diferencaAnoMesDia", diferencaAnoMesDia);
+        map.put("soma4Anos", soma4Anos);
+
+        return new Gson().toJson(map);
+
+    }
 }
