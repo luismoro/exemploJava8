@@ -15,7 +15,6 @@ public class AlunosData {
 
     public static List<Aluno> getAlunos() {
         List<Aluno> alunos = new ArrayList<>();
-
         Aluno aluno;
         aluno = new Aluno("Nome2", "Sobrenome2", 2, "rg2");
         alunos.add(aluno);

@@ -5,10 +5,13 @@ import com.example.model.bd.AlunosData;
 
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.OptionalDouble;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -65,24 +68,54 @@ public class AlunoService {
                 .orElse(null);
     }
 
-    public List<Aluno> getAlunoOrdenadoPorIdade(final List<Aluno> alunos){
-        List<Aluno> alunoList = new ArrayList<Aluno>(alunos);
+    public List<Aluno> getAlunoOrdenadoPorIdade(List<Aluno> alunos){
+        Collections.sort(alunos, new ComparadorPorIdade());
 
-        Collections.sort(alunoList, new ComparadorPorIdade());
-
-        alunos.forEach(new PrintaALuno());
+        for (Aluno aluno : alunos) {
+            System.out.println(aluno);
+        }
 
         return alunos;
     }
 
-    public List<Aluno> getAlunoOrdenadoPorIdadeJava8(final List<Aluno> alunos){
+    public List<Aluno> getAlunoOrdenadoPorIdadeDefaultMetod(List<Aluno> alunos){
+        alunos.sort(new ComparadorPorIdade());
+        alunos.forEach(new PrintaAluno());
+        return alunos;
+    }
 
+    public void printaAlunosConsumer(List<Aluno> alunos){
+        Consumer<Aluno> consumer = new Consumer<Aluno>() {
+            @Override
+            public void accept(Aluno aluno) {
+                System.out.println(aluno);
+            }
+        };
+        alunos.forEach(consumer);
+    }
+
+    public void printaAlunos(List<Aluno> alunos){
+        alunos.forEach(new Consumer<Aluno>() {
+            @Override
+            public void accept(Aluno aluno) {
+                System.out.println(aluno);
+            }
+        });
+    }
+
+    public void printaAlunosComLambda(List<Aluno> alunos){
+        alunos.forEach(aluno -> System.out.println(aluno));
+    }
+
+    public void printaAlunosComMethodReference(List<Aluno> alunos){
+        alunos.forEach(System.out::println);
+    }
+
+    public List<Aluno> getAlunoOrdenadoPorIdadeJava8(final List<Aluno> alunos){
         return alunos.stream()
             .sorted((a1,a2) -> a1.getIdade()-a2.getIdade())
-            .peek(Aluno::toString)
+            .peek(System.out::println)
             .collect(Collectors.toList());
-
-
     }
 
     public List<Aluno> ordenaAlunoPorIdadeListJava8(){
@@ -100,12 +133,41 @@ public class AlunoService {
             return a1.getIdade()-a2.getIdade();
         }
     }
-    class PrintaALuno implements Consumer<Aluno> {
+    class PrintaAluno implements Consumer<Aluno> {
         @Override
         public void accept(Aluno aluno) {
-            System.out.println(aluno.getIdade() + " - " + aluno.getNome() + " " + aluno.getSobrenome());
+            System.out.println(aluno);
         }
     }
 
+    public List<Aluno> getAlunosIdadeMaior5(final List<Aluno> alunos){
+        return alunos.stream()
+                .filter(aluno -> aluno.getIdade()>5)
+                .collect(Collectors.toList());
+    }
 
+    public OptionalDouble getMediaIdadeAlunos(final List<Aluno> alunos){
+        return alunos.stream()
+                .mapToInt(aluno -> aluno.getIdade())
+                .average();
+    }
+
+    public LocalDate getHoje(){
+        return LocalDate.now();
+    }
+
+    public int getDiferencaAno(LocalDate localDate){
+        return localDate.getYear() - LocalDate.now().getYear();
+    }
+
+    public Period getDiferencaAnoMesDia(LocalDate localDate){
+        Period period = Period.between(LocalDate.now(), localDate);
+        return period;
+    }
+
+    public String getSoma4Anos(LocalDate localDate){
+        LocalDate localDatePlus4 = localDate.plusYears(4);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+        return dateTimeFormatter.format(localDatePlus4);
+    }
 }
