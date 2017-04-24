@@ -1,9 +1,8 @@
 package com.example.model.bd;
 
-import com.example.model.Aluno;
-import com.example.model.Disciplina;
-import com.example.model.Escola;
 import com.google.common.collect.ImmutableList;
+
+import com.example.model.Aluno;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +34,8 @@ public class AlunosData {
         aluno = new Aluno("Nome7", "Sobrenome7", 7, "rg7");
         alunos.add(aluno);
         aluno = new Aluno("Nome9", "Sobrenome9", 9, "rg9");
+        alunos.add(aluno);
+        aluno = new Aluno("Nome123", "Sobrenome123", 123, "123rg");
         alunos.add(aluno);
         return alunos;
     }

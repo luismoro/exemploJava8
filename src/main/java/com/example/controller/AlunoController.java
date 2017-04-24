@@ -19,6 +19,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.OptionalDouble;
 
 /**
@@ -50,7 +51,7 @@ public class AlunoController {
     }
     @RequestMapping(value = {"/alunosJava8/{rg}"}, method = RequestMethod.GET)
     public Aluno getAlunoJava8(@PathVariable("rg") String rg) {
-        return alunosService.getAlunoJava8(rg);
+        return alunosService.getAlunoJava8(rg).orElse(new Aluno("Aluno", "Novo", 0, rg));
     }
     @RequestMapping(value = {"/alunosOrdenadosPorIdade"}, method = RequestMethod.GET)
     public List<Aluno> getAlunoOrdenadosPorIdade() {
@@ -76,9 +77,39 @@ public class AlunoController {
     public List<Aluno> getAlunosIdadeMaior5() {
         return alunosService.getAlunosIdadeMaior5(AlunosData.getAlunos());
     }
-    @RequestMapping(value = {"/getMediaIdadeAlunos"}, method = RequestMethod.GET)
-    public OptionalDouble getMediaIdadeAlunos() {
-        return alunosService.getMediaIdadeAlunos(AlunosData.getAlunos());
+    @RequestMapping(value = {"/getMediaIdadeAlunosOrZero"}, method = RequestMethod.GET)
+    public Double getMediaIdadeAlunosOrZero() {
+        return alunosService.getMediaIdadeAlunos(AlunosData.getAlunos())
+                .orElse(0);
+    }
+    @RequestMapping(value = {"/getMediaIdadeDivididoPor2EPrintaAlunosOrZero"}, method = RequestMethod.GET)
+    public Double getMediaIdadeDivididoPor2EPrintaAlunosOrZero() {
+         final Double  aDouble;
+
+        OptionalDouble mediaIdadeAlunos = alunosService.getMediaIdadeAlunos(AlunosData.getAlunos());
+        mediaIdadeAlunos.ifPresent(media -> System.out.println(media/2));
+
+        return mediaIdadeAlunos.isPresent() ? mediaIdadeAlunos.getAsDouble() / 2 : 0;
+    }
+    @RequestMapping(value = {"/getalunoPorRg123/{rg}"}, method = RequestMethod.GET)
+    public Aluno getalunoPorRg123(@PathVariable("rg") String rg) {
+        Optional<Aluno> rg1 = alunosService.getAlunoJava8(rg);
+        return rg1.filter(a -> a.getRg().startsWith("123"))
+                .orElse(new Aluno("Aluno", "Novo", 0, rg));
+    }
+    @RequestMapping(value = {"/printaNome"}, method = RequestMethod.GET)
+    public void printaNome() {
+        List<Aluno> alunos = AlunosData.getAlunos();
+
+        System.out.println("Java 8 - Lambda");
+        alunos.sort((o1, o2) -> o1.getNome().compareTo(o2.getNome()));
+        alunos.forEach(a -> System.out.println(a.getNome()));
+
+        System.out.println("Java 8 - Method Reference");
+        alunos.stream()
+                .map(a -> a.getNome())
+                .sorted(String::compareTo)
+                .forEach(System.out::println);
     }
     @RequestMapping(value = {"/getDatas"}, method = RequestMethod.GET)
     public String getDatas() {

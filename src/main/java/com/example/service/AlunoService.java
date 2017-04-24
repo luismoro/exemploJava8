@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -49,13 +50,12 @@ public class AlunoService {
         return null;
     }
 
-    public Aluno getAlunoJava8(String rg){
+    public Optional<Aluno> getAlunoJava8(String rg){
         List<Aluno> alunos = AlunosData.getAlunos();
 
        return alunos.stream().
                filter(aluno -> rg.equals(aluno.getRg()))
-               .findFirst()
-               .orElse(null);
+               .findFirst();
     }
 
     public Aluno getAlunoJava8(String nome, String sobrenome){
