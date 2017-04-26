@@ -113,8 +113,8 @@ public class AlunoService {
 
     public List<Aluno> getAlunoOrdenadoPorIdadeJava8(final List<Aluno> alunos){
         return alunos.stream()
-            .sorted((a1,a2) -> a1.getIdade()-a2.getIdade())
-            .peek(System.out::println)
+                .peek(System.out::println)
+//                .sorted((a1,a2) -> a1.getIdade()-a2.getIdade())
             .collect(Collectors.toList());
     }
 
